@@ -1,0 +1,400 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hello", "Hi", "Hey", "Good morning", "Good afternoon", "Good evening",
+        "Hi there", "Hey there", "Howdy", "What's up", "Greetings",
+        "Hello there", "Hi, I need help", "Hey, can you help me", "Good day"
+      ],
+      "responses": ["Hello! Welcome to the university assistant. How can I help you today?"]
+    },
+    {
+      "tag": "farewell",
+      "patterns": [
+        "Bye", "Goodbye", "See you", "See you later", "Take care",
+        "Thanks bye", "That's all", "I'm done", "Exit", "Quit",
+        "Thanks for your help", "Have a good day", "Catch you later", "Cheerio", "Later"
+      ],
+      "responses": ["Goodbye! Feel free to return anytime. Good luck with your studies!"]
+    },
+    {
+      "tag": "admission",
+      "patterns": [
+        "How do I apply for admission?",
+        "What is the admission process?",
+        "How can I get admitted to the university?",
+        "Tell me about the application process",
+        "What are the steps to apply?",
+        "How do I register for a course?",
+        "What is the enrollment procedure?",
+        "How to enroll in the university?",
+        "I want to apply for admission",
+        "What documents do I need for admission?",
+        "When does admission open?",
+        "How to submit an application?",
+        "What is the admission deadline?",
+        "Is there an online application?",
+        "Can I apply for admission online?"
+      ],
+      "responses": ["To apply for admission, visit the university portal and complete the online application form. You will need your academic transcripts, ID proof, and recommendation letters."]
+    },
+    {
+      "tag": "fees",
+      "patterns": [
+        "How much are the tuition fees?",
+        "What are the course fees?",
+        "How much does it cost to study here?",
+        "What is the fee structure?",
+        "Tell me about the fees",
+        "How much is the semester fee?",
+        "What are the annual fees?",
+        "Is there a registration fee?",
+        "How much does the program cost?",
+        "What is the tuition cost?",
+        "Are there any additional fees?",
+        "What is the lab fee?",
+        "How do I pay my fees?",
+        "When is the fee payment due?",
+        "Can I pay fees in installments?"
+      ],
+      "responses": ["Tuition fees vary by program. Please visit the finance section of the university portal or contact the accounts office for the latest fee structure."]
+    },
+    {
+      "tag": "scholarship",
+      "patterns": [
+        "Are there any scholarships available?",
+        "How can I apply for a scholarship?",
+        "What scholarships does the university offer?",
+        "Tell me about financial aid",
+        "Is there any fee waiver?",
+        "How do I get a scholarship?",
+        "What are the scholarship criteria?",
+        "Do you offer merit scholarships?",
+        "Is there a need-based scholarship?",
+        "How to apply for financial assistance?",
+        "What is the scholarship deadline?",
+        "Can international students get scholarships?",
+        "Are there research scholarships?",
+        "How much is the scholarship amount?",
+        "What documents are needed for scholarship?"
+      ],
+      "responses": ["The university offers merit-based and need-based scholarships. Visit the scholarship portal or contact the financial aid office for eligibility criteria and application details."]
+    },
+    {
+      "tag": "exam_schedule",
+      "patterns": [
+        "When are the exams?",
+        "What is the exam schedule?",
+        "When does the exam start?",
+        "Tell me about the examination timetable",
+        "When are the final exams?",
+        "What is the date of the exam?",
+        "When are the midterm exams?",
+        "Is the exam schedule out?",
+        "Where can I find the exam timetable?",
+        "When is the next exam?",
+        "Has the exam date been announced?",
+        "What time does the exam start?",
+        "Is there an exam this week?",
+        "When do semester exams begin?",
+        "Tell me the exam dates"
+      ],
+      "responses": ["Exam schedules are posted on the university portal under the Academics section. Check the notice board or contact your department for the latest timetable."]
+    },
+    {
+      "tag": "results",
+      "patterns": [
+        "When will the results be announced?",
+        "How do I check my results?",
+        "Where can I see my grades?",
+        "When are the results published?",
+        "How to view my marksheet?",
+        "Where are exam results posted?",
+        "Have the results been declared?",
+        "How to check semester results?",
+        "My results are not showing",
+        "When will grade cards be issued?",
+        "How to download my result?",
+        "What is the grading system?",
+        "How is the GPA calculated?",
+        "When will the final results come?",
+        "Can I apply for re-evaluation?"
+      ],
+      "responses": ["Results are published on the student portal under the Results section. Log in with your student ID to view your grades and download your marksheet."]
+    },
+    {
+      "tag": "courses",
+      "patterns": [
+        "What courses are available?",
+        "Tell me about the programs offered",
+        "What can I study here?",
+        "What are the available programs?",
+        "What degrees does the university offer?",
+        "Is there a computer science program?",
+        "Do you offer MBA?",
+        "What undergraduate programs are available?",
+        "Tell me about postgraduate courses",
+        "Is there a PhD program?",
+        "What are the elective courses?",
+        "How many credits is this course?",
+        "What subjects are taught in engineering?",
+        "Can I change my major?",
+        "Tell me about course curriculum"
+      ],
+      "responses": ["The university offers undergraduate, postgraduate, and doctoral programs across engineering, science, arts, and business. Visit the academics page for the full list of programs."]
+    },
+    {
+      "tag": "hostel",
+      "patterns": [
+        "Is hostel accommodation available?",
+        "Tell me about the hostel facilities",
+        "How do I apply for hostel?",
+        "What are the hostel fees?",
+        "Is on-campus housing available?",
+        "Tell me about student dormitories",
+        "Are there separate hostels for boys and girls?",
+        "What is the hostel room like?",
+        "Is Wi-Fi available in the hostel?",
+        "Is food provided in the hostel?",
+        "How to book a hostel room?",
+        "What are the hostel rules?",
+        "Is the hostel safe?",
+        "Can first year students get hostel?",
+        "What is the hostel allotment process?"
+      ],
+      "responses": ["The university provides separate hostel facilities for male and female students. Apply through the student portal. Rooms include Wi-Fi, meals, and 24/7 security."]
+    },
+    {
+      "tag": "library",
+      "patterns": [
+        "What are the library timings?",
+        "Tell me about the library",
+        "How do I borrow books from the library?",
+        "Is the library open on weekends?",
+        "What is the library schedule?",
+        "How many books can I borrow?",
+        "Does the library have digital resources?",
+        "How to access the online library?",
+        "Can I renew library books?",
+        "What is the fine for late return?",
+        "How to get a library card?",
+        "Does the library have study rooms?",
+        "Is the library open during holidays?",
+        "How to access journals and research papers?",
+        "What are the library rules?"
+      ],
+      "responses": ["The library is open Monday to Saturday, 8 AM to 8 PM. You can borrow up to 5 books for 2 weeks. Digital resources are accessible via the library portal 24/7."]
+    },
+    {
+      "tag": "assignment",
+      "patterns": [
+        "What is the assignment deadline?",
+        "When is the assignment due?",
+        "How do I submit my assignment?",
+        "Where do I submit assignments?",
+        "Can I submit assignment late?",
+        "Tell me about the assignment submission process",
+        "Is online assignment submission available?",
+        "What happens if I miss the assignment deadline?",
+        "How are assignments graded?",
+        "What is the late submission penalty?",
+        "How to check assignment marks?",
+        "Can I resubmit an assignment?",
+        "What format should the assignment be in?",
+        "Is plagiarism checked in assignments?",
+        "When will assignment results be out?"
+      ],
+      "responses": ["Assignment deadlines are posted on the course portal under the Assignments section. Submit via the online portal before the deadline to avoid penalties."]
+    },
+    {
+      "tag": "transport",
+      "patterns": [
+        "Is there a university bus service?",
+        "Tell me about transport facilities",
+        "How do I apply for the university bus?",
+        "What are the bus routes?",
+        "What is the transport fee?",
+        "Does the university provide pick and drop?",
+        "What time does the university bus arrive?",
+        "Is there a shuttle service?",
+        "How to register for university transport?",
+        "What is the bus schedule?",
+        "Is transport available from the city?",
+        "How much is the bus pass?",
+        "Are there multiple bus routes?",
+        "Where can I find bus timetable?",
+        "Is transport available for all students?"
+      ],
+      "responses": ["The university operates bus services on multiple routes. Visit the transport office or check the portal to view routes, timings, and register for a bus pass."]
+    },
+    {
+      "tag": "faculty",
+      "patterns": [
+        "How do I contact my professor?",
+        "Who is my course instructor?",
+        "Tell me about the faculty",
+        "How to reach the teaching staff?",
+        "Where can I find faculty contact details?",
+        "How do I schedule a meeting with my professor?",
+        "What are the faculty office hours?",
+        "Who is the head of the department?",
+        "Can I email my professor?",
+        "How to find my academic advisor?",
+        "Who is the dean of the faculty?",
+        "How to get academic guidance?",
+        "Is there a faculty directory?",
+        "How to contact the department?",
+        "Who should I talk to about my grades?"
+      ],
+      "responses": ["Faculty contact details and office hours are listed on the department website. You can email your professor directly or visit during their office hours."]
+    },
+    {
+      "tag": "attendance",
+      "patterns": [
+        "What is the attendance requirement?",
+        "How much attendance do I need?",
+        "What happens if my attendance is low?",
+        "How to check my attendance?",
+        "Is 75% attendance compulsory?",
+        "How to apply for attendance condonation?",
+        "Can I be detained for low attendance?",
+        "How is attendance calculated?",
+        "What is the minimum attendance percentage?",
+        "Where can I view my attendance record?",
+        "Can I apply for medical leave?",
+        "How to get attendance shortage waived?",
+        "Is attendance marked online?",
+        "How to view attendance on the portal?",
+        "What is the attendance policy?"
+      ],
+      "responses": ["A minimum of 75% attendance is required to appear in exams. Check your attendance on the student portal. Apply for condonation through your department if you fall short."]
+    },
+    {
+      "tag": "internship",
+      "patterns": [
+        "How do I find an internship?",
+        "Does the university help with internships?",
+        "Is internship mandatory?",
+        "How to apply for an internship?",
+        "Tell me about placement opportunities",
+        "What companies visit for campus placement?",
+        "How to register for campus placements?",
+        "When does placement season begin?",
+        "Does the university have a placement cell?",
+        "How to get an internship through the university?",
+        "What is the internship duration?",
+        "Can I do an internship abroad?",
+        "How to submit internship completion report?",
+        "Are internships paid?",
+        "How many credits is the internship worth?"
+      ],
+      "responses": ["The placement cell assists students with internships and job placements. Register on the placement portal and attend career fairs and campus drives organized throughout the year."]
+    },
+    {
+      "tag": "sports",
+      "patterns": [
+        "What sports facilities are available?",
+        "Is there a gym on campus?",
+        "Tell me about extracurricular activities",
+        "Does the university have a football team?",
+        "How to join a sports team?",
+        "What clubs are available?",
+        "Is there a swimming pool?",
+        "Tell me about student clubs",
+        "How to participate in cultural events?",
+        "Are there any student societies?",
+        "How to join a student club?",
+        "What events does the university organize?",
+        "Is there an annual sports fest?",
+        "How to register for sports?",
+        "What recreational facilities are there?"
+      ],
+      "responses": ["The university has a gym, sports fields, and a swimming pool. Join sports teams and clubs through the student activities office. Annual sports and cultural fests are held every year."]
+    },
+    {
+      "tag": "id_card",
+      "patterns": [
+        "How do I get my student ID card?",
+        "When will my ID card be issued?",
+        "I lost my student ID card",
+        "How to get a duplicate ID card?",
+        "What documents are needed for ID card?",
+        "How to apply for a new ID card?",
+        "Where to collect my student ID?",
+        "How much does a duplicate ID cost?",
+        "Is the ID card needed for exams?",
+        "How to update details on ID card?",
+        "When are ID cards distributed?",
+        "Is a digital ID card available?",
+        "My ID card is damaged, what to do?",
+        "Is student ID mandatory on campus?",
+        "How to get ID card reissued?"
+      ],
+      "responses": ["Student ID cards are issued during orientation. For lost or damaged cards, apply for a duplicate at the student services office with a fee payment receipt."]
+    },
+    {
+      "tag": "wifi",
+      "patterns": [
+        "How do I connect to campus Wi-Fi?",
+        "What is the Wi-Fi password?",
+        "Is Wi-Fi available on campus?",
+        "How to register for campus internet?",
+        "The internet is not working on campus",
+        "How to access campus Wi-Fi?",
+        "What is the campus network name?",
+        "Is there Wi-Fi in the hostel?",
+        "How to get Wi-Fi credentials?",
+        "Is campus internet free?",
+        "How fast is the campus Wi-Fi?",
+        "How to log in to campus network?",
+        "I forgot my Wi-Fi login details",
+        "Is there Wi-Fi in the library?",
+        "How to reset my network password?"
+      ],
+      "responses": ["Campus Wi-Fi is available across all buildings and the hostel. Use your student ID and portal password to log in. Contact the IT helpdesk for connectivity issues."]
+    },
+    {
+      "tag": "certificate",
+      "patterns": [
+        "How do I get my degree certificate?",
+        "How to apply for a bonafide certificate?",
+        "Where can I get my transcripts?",
+        "How to get a course completion certificate?",
+        "How to apply for a character certificate?",
+        "How long does it take to get a certificate?",
+        "What documents are needed for certificate?",
+        "How to get official transcripts?",
+        "Is there a fee for certificates?",
+        "How to apply for provisional certificate?",
+        "When is the degree certificate issued?",
+        "How to get a migration certificate?",
+        "Where to apply for marksheet?",
+        "Can I get a digital certificate?",
+        "How to get attestation done on certificate?"
+      ],
+      "responses": ["Apply for certificates through the student services portal. Bonafide and character certificates are issued within 3 working days. Degree certificates are issued after final results."]
+    },
+    {
+      "tag": "canteen",
+      "patterns": [
+        "What are the canteen timings?",
+        "Is there a cafeteria on campus?",
+        "Where can I eat on campus?",
+        "What food is available in the canteen?",
+        "Is the canteen food good?",
+        "Does the university have a mess?",
+        "What are the mess timings?",
+        "Is vegetarian food available?",
+        "How much does food cost in the canteen?",
+        "Is there a food court on campus?",
+        "Are there multiple canteens?",
+        "Can I pay digitally at the canteen?",
+        "What time does the canteen open?",
+        "Is the canteen open on Sundays?",
+        "Is outside food allowed on campus?"
+      ],
+      "responses": ["The campus canteen is open from 7 AM to 9 PM on weekdays. It serves vegetarian and non-vegetarian meals at subsidized rates. Digital payments are accepted."]
+    }
+  ]
+}
