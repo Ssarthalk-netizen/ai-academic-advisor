@@ -1,4 +1,4 @@
-# The Python ML training code is not part of the website build.
-ml/
-supabase/tests/
-scripts/
+# Only the top-level Python training folder is excluded (leading slash = repo root only).
+/ml/
+/supabase/tests/
+/scripts/
