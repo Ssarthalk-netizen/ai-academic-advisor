@@ -11,8 +11,6 @@ const date = (offsetDays: number) => iso(offsetDays).slice(0, 10);
 type S = { name: string; code: string; credits: number; marks?: number; att: [number, number]; diff?: number };
 
 export const DEMO_PROFILE = {
-  full_name: "Sample Student",
-  university: "Sample University",
   degree: "B.Tech",
   branch: "Computer Science (AI & ML)",
   current_semester: 3,

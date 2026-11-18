@@ -1,26 +1,132 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Design tokens. Base: warm butter canvas + dark-brown ink (Huddle-inspired),
+  ember orange for numbers that need attention (borrowed from the "Enquire"
+  floating stat cards), and one deep "night" section (borrowed from moosë).
+*/
+@theme {
+  --color-canvas: #fff6d9;
+  --color-canvas-deep: #fbdc84;
+  --color-paper: #fffdf6;
+  --color-ink: #3a1607;
+  --color-ink-soft: #6b4a3a;
+  --color-ink-faint: #a58c7c;
+  --color-line: #efe3c4;
+  --color-butter: #fce38a;
+  --color-butter-soft: #fef4cc;
+  --color-ember: #e0600c;
+  --color-ember-soft: #fde7d3;
+  --color-leaf: #2e7d4f;
+  --color-leaf-soft: #def3e4;
+  --color-alarm: #b42318;
+  --color-alarm-soft: #fde4e1;
+  --color-night: #2a140a;
+
+  --font-display: "Young Serif", ui-serif, Georgia, serif;
+  --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sheet: 28px;
+  --radius-card: 18px;
+  --radius-field: 12px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: light;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-canvas-deep) linear-gradient(180deg, var(--color-canvas) 0%, var(--color-canvas-deep) 100%) no-repeat;
+  background-size: 100% 100%;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Uppercase serif headlines are the identity of this UI; labels stay sentence case. */
+.display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  line-height: 1.04;
+  font-weight: 400;
+}
+.numeral {
+  font-family: var(--font-display);
+  font-variant-numeric: lining-nums tabular-nums;
+  line-height: 1;
+}
+
+.sheet {
+  background: var(--color-paper);
+  border-radius: var(--radius-sheet);
+  box-shadow: 0 1px 0 rgba(58, 22, 7, 0.04), 0 24px 60px -30px rgba(120, 70, 0, 0.35);
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+}
+.card-butter {
+  background: linear-gradient(180deg, #fff7d6 0%, #fffdf3 100%);
+  border: 1px solid #f6e3a3;
+  border-radius: var(--radius-card);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  transition: background-color 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary { background: var(--color-ink); color: #fff8e6; }
+.btn-primary:hover:not(:disabled) { background: #521f0b; }
+.btn-soft { background: var(--color-butter-soft); color: var(--color-ink); }
+.btn-soft:hover:not(:disabled) { background: var(--color-butter); }
+.btn-ghost { color: var(--color-ink-soft); }
+.btn-ghost:hover:not(:disabled) { background: var(--color-butter-soft); color: var(--color-ink); }
+.btn-danger { background: var(--color-alarm-soft); color: var(--color-alarm); }
+.btn-danger:hover:not(:disabled) { background: #fbcfc9; }
+
+.field {
+  width: 100%;
+  border: 1px solid var(--color-line);
+  background: #fff;
+  border-radius: var(--radius-field);
+  padding: 0.6rem 0.8rem;
+  font-size: 14px;
+  color: var(--color-ink);
+}
+.field::placeholder { color: var(--color-ink-faint); }
+.field:focus { outline: none; border-color: var(--color-ember); box-shadow: 0 0 0 3px var(--color-ember-soft); }
+.label { display: block; font-size: 13px; font-weight: 600; color: var(--color-ink-soft); margin-bottom: 0.35rem; }
+
+:focus-visible {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.prose-ai p { margin: 0.5rem 0; }
+.prose-ai ul, .prose-ai ol { margin: 0.4rem 0 0.4rem 1.2rem; }
+.prose-ai ul { list-style: disc; }
+.prose-ai ol { list-style: decimal; }
+.prose-ai strong { font-weight: 650; }
+.prose-ai h1, .prose-ai h2, .prose-ai h3 { font-weight: 700; margin: 0.8rem 0 0.3rem; }
+.prose-ai code { background: var(--color-butter-soft); padding: 0 0.25rem; border-radius: 4px; font-size: 0.92em; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }

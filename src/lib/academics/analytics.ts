@@ -1,4 +1,4 @@
-import { attendancePercent, gradeFor, PASS_PERCENT, round2, sgpa, type GradedSubject } from "./grading";
+import { gradeFor, PASS_PERCENT, round2, sgpa, type GradedSubject } from "./grading";
 import type { AcademicRecord, Assessment, Subject } from "./types";
 
 /**
@@ -25,8 +25,9 @@ export type SubjectStats = {
 function assessmentPercent(list: Assessment[]): number | null {
   const score = list.reduce((s, a) => s + a.score, 0);
   const max = list.reduce((s, a) => s + a.max_score, 0);
-  return max > 0 ? round2((score / max) * 100) : null;
+  return max > 0 ? round1((score / max) * 100) : null;
 }
+const round1 = (n: number) => Math.round(n * 10) / 10;
 
 export function subjectStats(rec: AcademicRecord): SubjectStats[] {
   const semNo = new Map(rec.semesters.map((s) => [s.id, s.number]));
@@ -34,7 +35,7 @@ export function subjectStats(rec: AcademicRecord): SubjectStats[] {
     const as = rec.assessments
       .filter((a) => a.subject_id === sub.id)
       .sort((a, b) => (a.taken_on ?? "").localeCompare(b.taken_on ?? ""));
-    const final = sub.marks_obtained !== null ? round2((sub.marks_obtained / sub.max_marks) * 100) : null;
+    const final = sub.marks_obtained !== null ? round1((sub.marks_obtained / sub.max_marks) * 100) : null;
     const avg = assessmentPercent(as);
     const percent = final ?? avg;
 
@@ -43,7 +44,7 @@ export function subjectStats(rec: AcademicRecord): SubjectStats[] {
       const k = Math.max(1, Math.floor(as.length / 2));
       // mean of percentages, so a 40-mark mid-term doesn't outweigh a 10-mark quiz
       const pct = (l: Assessment[]) => l.reduce((s, a) => s + (a.score / a.max_score) * 100, 0) / l.length;
-      trend = round2(pct(as.slice(-k)) - pct(as.slice(0, as.length - k)));
+      trend = round1(pct(as.slice(-k)) - pct(as.slice(0, as.length - k)));
     }
 
     const byTopic = new Map<string, number[]>();
@@ -66,7 +67,7 @@ export function subjectStats(rec: AcademicRecord): SubjectStats[] {
       percentSource: final !== null ? "final" : avg !== null ? "assessments" : "none",
       grade: g?.grade ?? null,
       points: g?.points ?? null,
-      attendance: attendancePercent(sub.classes_attended, sub.classes_total),
+      attendance: sub.classes_total > 0 ? round1((sub.classes_attended / sub.classes_total) * 100) : null,
       assessments: as.length,
       trend,
       weakTopics,
