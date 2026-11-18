@@ -28,32 +28,6 @@ PROGRAMMES = {
     9991: "Management (Evening)",
 }
 
-# Features the risk model is allowed to use. Parents' occupation, nationality,
-# marital status and national economic indicators are deliberately excluded:
-# they are not things an advisor can act on and they add fairness risk.
-RISK_FEATURES = [
-    "admission_grade", "age_at_enrollment", "scholarship_holder", "debtor",
-    "tuition_up_to_date", "displaced",
-    "sem1_enrolled", "sem1_evaluations", "sem1_approved", "sem1_grade", "sem1_without_eval",
-    "sem2_enrolled", "sem2_evaluations", "sem2_approved", "sem2_grade", "sem2_without_eval",
-    "sem1_pass_rate", "sem2_pass_rate", "grade_trend",
-]
-
-FEATURE_LABELS = {
-    "admission_grade": "Admission score", "age_at_enrollment": "Age at enrolment",
-    "scholarship_holder": "Scholarship holder", "debtor": "Has outstanding dues",
-    "tuition_up_to_date": "Fees paid up to date", "displaced": "Studying away from home",
-    "sem1_enrolled": "Sem 1 courses enrolled", "sem1_evaluations": "Sem 1 exams attempted",
-    "sem1_approved": "Sem 1 courses passed", "sem1_grade": "Sem 1 SGPA",
-    "sem1_without_eval": "Sem 1 courses not attempted",
-    "sem2_enrolled": "Sem 2 courses enrolled", "sem2_evaluations": "Sem 2 exams attempted",
-    "sem2_approved": "Sem 2 courses passed", "sem2_grade": "Sem 2 SGPA",
-    "sem2_without_eval": "Sem 2 courses not attempted",
-    "sem1_pass_rate": "Sem 1 pass rate", "sem2_pass_rate": "Sem 2 pass rate",
-    "grade_trend": "SGPA change (Sem 1 → Sem 2)",
-}
-
-
 def build_students() -> pd.DataFrame:
     df = pd.read_csv(RAW / "student_dropout_academic_success.csv")
     df.columns = [c.strip().replace("﻿", "") for c in df.columns]
