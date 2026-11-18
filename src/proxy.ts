@@ -9,10 +9,24 @@ import { NextResponse, type NextRequest } from "next/server";
 const PUBLIC_PATHS = ["/", "/login", "/signup", "/privacy", "/terms", "/auth", "/reset-password"];
 
 export async function proxy(request: NextRequest) {
+  try {
+    return await guard(request);
+  } catch (err) {
+    // Never take the whole site down: log it, and let public pages render.
+    // App pages still verify the user on the server, so this fails safe.
+    console.error("[proxy] session check failed", err);
+    return NextResponse.next({ request });
+  }
+}
+
+async function guard(request: NextRequest) {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) throw new Error("NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY are not set");
   let response = NextResponse.next({ request });
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    url,
+    key,
     {
       cookies: {
         getAll() {
