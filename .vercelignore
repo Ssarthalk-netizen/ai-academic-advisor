@@ -1,0 +1,4 @@
+# The Python ML training code is not part of the website build.
+ml/
+supabase/tests/
+scripts/
