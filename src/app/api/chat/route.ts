@@ -95,9 +95,10 @@ export const POST = route(async (req) => {
 
   // Both rows need identical keys for a bulk insert
   const conf = Number(cls.confidence.toFixed(4));
+  const now = Date.now(); // distinct timestamps keep question-before-answer order
   const saved = await supabase.from("chat_messages").insert([
-    { role: "user", content: message, intent: cls.intent, confidence: conf, escalated: false },
-    { role: "assistant", content: reply.slice(0, 8000), intent: cls.intent, confidence: conf, escalated },
+    { role: "user", content: message, intent: cls.intent, confidence: conf, escalated: false, created_at: new Date(now - 1).toISOString() },
+    { role: "assistant", content: reply.slice(0, 8000), intent: cls.intent, confidence: conf, escalated, created_at: new Date(now).toISOString() },
   ]);
   if (saved.error) console.error("[chat] could not save messages", saved.error.message);
 
