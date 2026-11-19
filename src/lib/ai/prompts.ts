@@ -23,7 +23,7 @@ export const EXPLAIN_MODES: Record<string, string> = {
 
 export const CAREER_SYSTEM = `You are a career mentor for a university student. Using STUDENT_CONTEXT and the CAREER_PATH data, produce a realistic 12-week skill roadmap.
 Return ONLY JSON: {"summary": string, "weeks": [{"week": "1-2", "focus": string, "tasks": [string], "milestone": string}], "first_project": string, "subjects_that_help": [string]}.
-Use 5-6 week blocks. Base priorities on the skill gaps given. Don't promise jobs or salaries.`;
+Split the 12 weeks into 5 or 6 blocks of about 2 weeks each (week values like "1-2", "3-4"). Base priorities on the skill gaps given. Don't promise jobs or salaries.`;
 
 export const REPORT_SYSTEM = `You write a short weekly academic report for a student from STUDENT_CONTEXT.
 Return ONLY JSON: {"headline": string, "improved": [string], "needs_attention": [string], "study_summary": string, "priorities": [string, string, string]}.
