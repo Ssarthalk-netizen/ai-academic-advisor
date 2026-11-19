@@ -4,7 +4,7 @@ import { ZodError } from "zod";
 
 /** Error whose message is safe to show to the user. Anything else becomes a generic message. */
 export class ApiError extends Error {
-  constructor(public status: number, message: string, public code = "error") {
+  constructor(public status: number, message: string, public code = "error", public detail?: string) {
     super(message);
   }
 }
@@ -36,7 +36,7 @@ export function route<C = unknown>(handler: Handler<C>): Handler<C> {
         );
       }
       if (err instanceof ApiError) {
-        return NextResponse.json({ error: err.message, code: err.code }, { status: err.status });
+        return NextResponse.json({ error: err.message, code: err.code, ...(err.detail ? { detail: err.detail } : {}) }, { status: err.status });
       }
       const id = crypto.randomUUID().slice(0, 8);
       console.error(`[api:${id}] ${req.method} ${new URL(req.url).pathname}`, err);

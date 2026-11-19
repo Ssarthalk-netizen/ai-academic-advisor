@@ -29,10 +29,31 @@ export type GenOptions = {
   pdf?: { data: string; mimeType: "application/pdf" }; // base64
 };
 
+/** Ask the API which models this key can use, best "flash" models first. */
+async function discoverModels(): Promise<string[]> {
+  try {
+    const found: string[] = [];
+    const pager = await ai().models.list({ config: { pageSize: 100 } });
+    for await (const m of pager) {
+      const name = (m.name ?? "").replace(/^models\//, "");
+      const actions = (m as { supportedActions?: string[] }).supportedActions ?? [];
+      if (name.includes("flash") && !/image|tts|audio|live|embedding|thinking-exp/.test(name) && (actions.length === 0 || actions.includes("generateContent"))) found.push(name);
+    }
+    // prefer newest versions, non-lite before lite
+    return found.sort((a, b) => (b.match(/\d+(\.\d+)?/)?.[0] ?? "0").localeCompare(a.match(/\d+(\.\d+)?/)?.[0] ?? "0", undefined, { numeric: true }) || Number(a.includes("lite")) - Number(b.includes("lite")));
+  } catch (err) {
+    console.error("[gemini] could not list models", err);
+    return [];
+  }
+}
+
+export let lastAiError = "";
+
 export async function generate(opts: GenOptions): Promise<{ text: string; model: string }> {
-  const models = workingModel
+  let models = workingModel
     ? [workingModel]
     : [...new Set([env().GEMINI_MODEL, ...FALLBACK_MODELS].filter(Boolean) as string[])];
+  let discovered = false;
 
   const contents =
     typeof opts.prompt === "string"
@@ -40,7 +61,8 @@ export async function generate(opts: GenOptions): Promise<{ text: string; model:
       : opts.prompt.map((m) => ({ role: m.role, parts: [{ text: m.text }] }));
 
   let lastErr: unknown;
-  for (const model of models) {
+  for (let i = 0; i < models.length; i++) {
+    const model = models[i];
     try {
       const res = await ai().models.generateContent({
         model,
@@ -60,7 +82,14 @@ export async function generate(opts: GenOptions): Promise<{ text: string; model:
     } catch (err) {
       lastErr = err;
       const msg = String((err as Error)?.message ?? err);
-      if (/not found|404|not supported|unsupported model/i.test(msg)) continue; // try next model
+      if (/not found|404|not supported|unsupported model|is not available/i.test(msg)) {
+        if (i === models.length - 1 && !discovered) {
+          discovered = true;
+          const extra = (await discoverModels()).filter((m) => !models.includes(m));
+          models = [...models, ...extra];
+        }
+        continue; // try next model
+      }
       if (/429|quota|RESOURCE_EXHAUSTED/i.test(msg)) {
         throw new ApiError(503, "The AI service is busy (free-tier limit reached). Please try again in a minute.", "ai_quota");
       }
@@ -68,7 +97,9 @@ export async function generate(opts: GenOptions): Promise<{ text: string; model:
     }
   }
   console.error("[gemini] generation failed", lastErr);
-  throw new ApiError(503, "The AI service is unavailable right now. Your data is safe, so please try again shortly.", "ai_unavailable");
+  lastAiError = String((lastErr as Error)?.message ?? lastErr).slice(0, 300);
+  // TEMP diagnostic detail (Google's error text, never contains the key); remove after setup
+  throw new ApiError(503, "The AI service is unavailable right now. Your data is safe, so please try again shortly.", "ai_unavailable", `tried ${models.join(", ")}: ${lastAiError}`);
 }
 
 /** Parse a JSON reply defensively (models sometimes wrap JSON in ``` fences). */
