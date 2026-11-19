@@ -93,10 +93,13 @@ export const POST = route(async (req) => {
     }
   }
 
-  await supabase.from("chat_messages").insert([
-    { role: "user", content: message, intent: cls.intent, confidence: Number(cls.confidence.toFixed(4)) },
-    { role: "assistant", content: reply.slice(0, 8000), intent: cls.intent, escalated },
+  // Both rows need identical keys for a bulk insert
+  const conf = Number(cls.confidence.toFixed(4));
+  const saved = await supabase.from("chat_messages").insert([
+    { role: "user", content: message, intent: cls.intent, confidence: conf, escalated: false },
+    { role: "assistant", content: reply.slice(0, 8000), intent: cls.intent, confidence: conf, escalated },
   ]);
+  if (saved.error) console.error("[chat] could not save messages", saved.error.message);
 
   return NextResponse.json({
     reply,
