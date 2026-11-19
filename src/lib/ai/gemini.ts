@@ -8,7 +8,8 @@ import { ApiError } from "../security/errors";
  * often, so we try GEMINI_MODEL first, then fall back through known models
  * if one isn't available on this key.
  */
-const FALLBACK_MODELS = ["gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-2.5-flash"];
+// flash-lite first: fastest and least congested on the free tier; others are fallbacks
+const FALLBACK_MODELS = ["gemini-3.5-flash-lite", "gemini-3.5-flash", "gemini-3.6-flash", "gemini-2.5-flash"];
 
 let client: GoogleGenAI | null = null;
 let workingModel: string | null = null;
@@ -73,7 +74,7 @@ export async function generate(opts: GenOptions): Promise<{ text: string; model:
           temperature: opts.temperature ?? 0.4,
           maxOutputTokens: opts.maxTokens ?? 1200,
           ...(opts.json ? { responseMimeType: "application/json" } : {}),
-          abortSignal: AbortSignal.timeout(25_000),
+          abortSignal: AbortSignal.timeout(15_000),
         },
       });
       const text = res.text?.trim();
