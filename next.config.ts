@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+const supabaseUrl = (() => { try { return new URL(process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").origin; } catch { return ""; } })();
 const isDev = process.env.NODE_ENV !== "production";
 
 // Content Security Policy: only our own origin + Supabase. Inline styles/scripts

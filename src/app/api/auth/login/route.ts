@@ -12,6 +12,7 @@ export const POST = route(async (req) => {
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   // Same message for wrong email and wrong password (no account enumeration)
+  if (error) console.warn("[auth]", error.status, error.code, error.message);
   if (error) throw new ApiError(401, "Incorrect email or password.", "bad_credentials");
   return NextResponse.json({ ok: true });
 });

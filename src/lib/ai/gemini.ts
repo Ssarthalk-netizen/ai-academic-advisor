@@ -14,7 +14,7 @@ let client: GoogleGenAI | null = null;
 let workingModel: string | null = null;
 
 function ai() {
-  client ??= new GoogleGenAI({ apiKey: env().GEMINI_API_KEY });
+  client ??= new GoogleGenAI({ apiKey: env().GEMINI_API_KEY.trim() });
   return client;
 }
 

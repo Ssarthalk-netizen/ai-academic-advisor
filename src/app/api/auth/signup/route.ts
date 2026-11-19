@@ -16,6 +16,7 @@ export const POST = route(async (req) => {
     email, password,
     options: { data: { full_name: full_name ?? "" }, emailRedirectTo: `${origin}/auth/callback` },
   });
+  if (error) console.warn("[auth]", error.status, error.code, error.message);
   if (error) {
     if (/already registered/i.test(error.message)) throw new ApiError(409, "An account with this email already exists. Try signing in.");
     if (/password/i.test(error.message)) throw new ApiError(400, "That password isn't allowed. Try a stronger one.");

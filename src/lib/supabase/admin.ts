@@ -1,6 +1,7 @@
 import "server-only";
 import { createClient } from "@supabase/supabase-js";
 import { env } from "../env";
+import { SUPABASE_URL } from "./public-env";
 
 /**
  * Service-role client. BYPASSES Row Level Security, so it is only used for
@@ -9,7 +10,7 @@ import { env } from "../env";
  */
 export function createAdminClient() {
   const e = env();
-  return createClient(e.NEXT_PUBLIC_SUPABASE_URL, e.SUPABASE_SERVICE_ROLE_KEY, {
+  return createClient(SUPABASE_URL, e.SUPABASE_SERVICE_ROLE_KEY.trim(), {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 }
