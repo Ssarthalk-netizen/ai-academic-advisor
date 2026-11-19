@@ -50,10 +50,11 @@ async function discoverModels(): Promise<string[]> {
 export let lastAiError = "";
 
 export async function generate(opts: GenOptions): Promise<{ text: string; model: string }> {
-  let models = workingModel
-    ? [workingModel]
-    : [...new Set([env().GEMINI_MODEL, ...FALLBACK_MODELS].filter(Boolean) as string[])];
+  // last model that worked goes first, the rest stay as fallbacks
+  let models = [...new Set([workingModel, env().GEMINI_MODEL, ...FALLBACK_MODELS].filter(Boolean) as string[])];
   let discovered = false;
+  let retried = false;
+  let busy = false;
 
   const contents =
     typeof opts.prompt === "string"
@@ -72,7 +73,7 @@ export async function generate(opts: GenOptions): Promise<{ text: string; model:
           temperature: opts.temperature ?? 0.4,
           maxOutputTokens: opts.maxTokens ?? 1200,
           ...(opts.json ? { responseMimeType: "application/json" } : {}),
-          abortSignal: AbortSignal.timeout(30_000),
+          abortSignal: AbortSignal.timeout(25_000),
         },
       });
       const text = res.text?.trim();
@@ -90,16 +91,26 @@ export async function generate(opts: GenOptions): Promise<{ text: string; model:
         }
         continue; // try next model
       }
-      if (/429|quota|RESOURCE_EXHAUSTED/i.test(msg)) {
-        throw new ApiError(503, "The AI service is busy (free-tier limit reached). Please try again in a minute.", "ai_quota");
+      // Busy or out of free quota on this model: each model has its own
+      // capacity and quota, so try the next one.
+      if (/429|quota|RESOURCE_EXHAUSTED|503|UNAVAILABLE|overloaded|high demand|500|INTERNAL|deadline|timeout|aborted|empty response/i.test(msg)) {
+        busy = true;
+        if (i === models.length - 1 && !retried) {
+          retried = true;
+          await new Promise((r) => setTimeout(r, 1500));
+          i = -1; // one more pass over the models
+        }
+        continue;
       }
-      break;
+      break; // e.g. invalid API key: no point trying other models
     }
   }
   console.error("[gemini] generation failed", lastErr);
   lastAiError = String((lastErr as Error)?.message ?? lastErr).slice(0, 300);
-  // TEMP diagnostic detail (Google's error text, never contains the key); remove after setup
-  throw new ApiError(503, "The AI service is unavailable right now. Your data is safe, so please try again shortly.", "ai_unavailable", `tried ${models.join(", ")}: ${lastAiError}`);
+  if (busy) {
+    throw new ApiError(503, "Gemini is very busy right now (Google-side demand or free-tier limit). Please try again in a minute.", "ai_busy");
+  }
+  throw new ApiError(503, "The AI service is unavailable right now. Your data is safe, so please try again shortly.", "ai_unavailable");
 }
 
 /** Parse a JSON reply defensively (models sometimes wrap JSON in ``` fences). */
