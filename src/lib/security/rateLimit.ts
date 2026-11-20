@@ -7,7 +7,8 @@ import { ApiError } from "./errors";
  * Format: "<max requests>/<window seconds>".
  */
 const DEFAULTS = {
-  AUTH: "8/600",      // login / signup / password reset per IP: 8 per 10 min
+  AUTH: "60/600",     // login / signup / password reset per IP: 60 per 10 min (college Wi-Fi shares one IP)
+  AUTH_ACCOUNT: "15/600", // sign-in attempts per account: 15 per 10 min
   AI: "20/300",       // Gemini-backed routes per user: 20 per 5 min
   AI_DAILY: "150/86400",
   WRITE: "120/60",    // record create/update per user

@@ -19,6 +19,7 @@ export const POST = route(async (req) => {
   if (error) console.warn("[auth]", error.status, error.code, error.message);
   if (error) {
     if (/already registered/i.test(error.message)) throw new ApiError(409, "An account with this email already exists. Try signing in.");
+    if (error.status === 429 || /rate limit/i.test(error.message)) throw new ApiError(429, "Too many sign-ups right now. Please wait a few minutes, or use the demo account.", "rate_limited");
     if (/password/i.test(error.message)) throw new ApiError(400, "That password isn't allowed. Try a stronger one.");
     throw new ApiError(400, "Could not create the account. Please try again.");
   }
